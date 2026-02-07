@@ -113,7 +113,7 @@ const App = () => {
             </h1>
 
             <p className="text-blue-600 font-black tracking-[0.4em] text-lg mb-14 uppercase">
-              PROGRAMS 5, 6, 9, 10
+              FEBRUARY 5, 6, 9, 10
             </p>
 
             {/* COLLEGE INFO */}
