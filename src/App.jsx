@@ -17,8 +17,8 @@ const firebaseConfig = {
 
 /** * 2. DHANISH: CHANGE YOUR LOGO LINKS HERE
  */
-const mainLogoUrl = "https://i.ibb.co/Y4vZCymx/logo.png"; 
-const collegeLogoUrl = "https://i.ibb.co/k26Z1Rwf/college.png";
+const mainLogoUrl = "https://ibb.co/pr5hFSrX"; 
+const collegeLogoUrl = "https://ibb.co/dspKSWXx";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
