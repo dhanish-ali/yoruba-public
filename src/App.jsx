@@ -134,7 +134,7 @@ const App = () => {
           </div>
         )}
 
-        {/* --- SCREEN: RESULT (Winners List with Search) --- */}
+       {/* --- SCREEN: RESULT (Grouped by Program) --- */}
         {view === 'result' && (
           <div className="animate-in slide-in-from-right duration-300 pb-20">
             <div className="flex items-center justify-between mb-6">
@@ -149,44 +149,55 @@ const App = () => {
               </div>
               <input 
                 type="text"
-                placeholder="Search Name or Programme..."
+                placeholder="Search Program or Name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/60 backdrop-blur-md border-2 border-white focus:border-blue-400 focus:bg-white p-4 pl-12 pr-12 rounded-[1.5rem] shadow-lg outline-none transition-all font-bold text-blue-900 placeholder:text-blue-300 placeholder:font-medium"
+                className="w-full bg-white/60 backdrop-blur-md border-2 border-white focus:border-blue-400 focus:bg-white p-4 pl-12 rounded-[1.5rem] shadow-lg outline-none transition-all font-bold text-blue-900 placeholder:text-blue-300"
               />
-              {searchTerm && (
-                <button 
-                  onClick={() => setSearchTerm('')}
-                  className="absolute inset-y-0 right-4 flex items-center text-blue-400 hover:text-red-500 transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              )}
             </div>
             
-            <div className="space-y-6">
-              {filteredWinners.map((p) => (
-                <div key={p.id} className="bg-white/70 backdrop-blur-xl border-2 border-white p-8 rounded-[3rem] relative overflow-hidden shadow-xl group animate-in slide-in-from-bottom-4 duration-300">
-                  <div className="absolute top-0 right-0 p-6 text-7xl font-black text-blue-900/5 italic pointer-events-none">#{p.rank}</div>
-                  <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3">
-                    <BookOpen size={14}/> {p.program} <span className="opacity-20">|</span> <Languages size={14}/> {p.language || 'Any'}
+            <div className="space-y-12">
+              {/* LOGIC: Group participants by Program Name */}
+              {Object.entries(
+                filteredWinners.reduce((acc, p) => {
+                  const prog = p.program || 'Other Programs';
+                  if (!acc[prog]) acc[prog] = [];
+                  acc[prog].push(p);
+                  return acc;
+                }, {})
+              ).map(([programName, winners]) => (
+                <div key={programName} className="space-y-4">
+                  {/* PROGRAM HEADER BUTTON/LABEL */}
+                  <div className="inline-block bg-blue-900 text-white px-6 py-2 rounded-2xl font-black uppercase tracking-widest text-sm shadow-md mb-2">
+                    {programName}
                   </div>
-                  <div className="text-3xl font-black uppercase text-slate-800 leading-none mb-3 pr-12">{p.name}</div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">{p.department}</div>
-                  <div className={`mt-6 inline-flex items-center gap-2 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest ${p.rank === 1 ? 'bg-yellow-500 text-white shadow-lg' : p.rank === 2 ? 'bg-slate-400 text-white' : 'bg-orange-700 text-white'}`}>
-                    {p.rank === 1 ? '🥇 First Position' : p.rank === 2 ? '🥈 Second Position' : '🥉 Third Position'}
+
+                  {/* WINNERS IN THIS PROGRAM */}
+                  <div className="grid grid-cols-1 gap-4">
+                    {winners.sort((a,b) => a.rank - b.rank).map((p) => (
+                      <div key={p.id} className="bg-white/70 backdrop-blur-xl border-2 border-white p-6 rounded-[2.5rem] relative overflow-hidden shadow-lg animate-in slide-in-from-bottom-4">
+                        <div className="absolute top-0 right-0 p-4 text-5xl font-black text-blue-900/5 italic pointer-events-none">#{p.rank}</div>
+                        <div className="text-2xl font-black uppercase text-slate-800 leading-none mb-2">{p.name}</div>
+                        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                          <Building2 size={12}/> {p.department} <span className="opacity-30">|</span> <Languages size={12}/> {p.language || 'Any'}
+                        </div>
+                        <div className={`mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest ${p.rank === 1 ? 'bg-yellow-500 text-white' : p.rank === 2 ? 'bg-slate-400 text-white' : 'bg-orange-700 text-white'}`}>
+                          {p.rank === 1 ? '🥇 First' : p.rank === 2 ? '🥈 Second' : '🥉 Third'}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
+
               {filteredWinners.length === 0 && (
                 <div className="py-32 text-center text-blue-900 font-black uppercase tracking-widest opacity-20 border-4 border-dashed border-blue-200 rounded-[3rem]">
-                  {searchTerm ? "No Match Found" : "Results Loading..."}
+                  No Winners Announced Yet
                 </div>
               )}
             </div>
           </div>
         )}
-
         {/* --- SCREEN: SCOREBOARD (DEPT ONLY) --- */}
         {view === 'scoreboard' && (
           <div className="animate-in slide-in-from-right duration-300 pb-20">
