@@ -98,10 +98,15 @@ const App = () => {
               VANGUARDIA STUDENTS <br /> UNION 2025-26
             </h2>
 
-            {/* FLOATING LOGO */}
-            <div className="w-60 h-60 md:w-80 md:h-80 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center mb-10 shadow-2xl relative border-4 border-white/60 animate-bounce-slow">
-               <img src={mainLogoUrl} alt="Logo" className="w-[85%] h-[85%] object-contain" onError={(e)=>e.target.style.opacity='0.1'} />
-            </div>
+          {/* FLOATING LOGO - Circle Removed */}
+<div className="w-60 h-60 md:w-80 md:h-80 flex items-center justify-center mb-10 relative animate-bounce-slow">
+  <img 
+    src={mainLogoUrl} 
+    alt="Logo" 
+    className="w-full h-full object-contain" 
+    onError={(e)=>e.target.style.opacity='0.1'} 
+  />
+</div>
 
             <h1 className="text-3xl md:text-4xl font-black mb-1 uppercase tracking-tighter text-blue-950 leading-tight">
               YORUBA FINE ARTS <br /> 2025-26
