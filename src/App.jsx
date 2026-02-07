@@ -117,7 +117,7 @@ const App = () => {
                 <img src={collegeLogoUrl} alt="College" className="w-full h-full object-contain" />
               </div>
               <p className="font-black text-sm md:text-base leading-tight uppercase text-blue-950 italic">
-                GOVT. ARTS AND SCIENCE COLLEGE
+                GOVT. ARTS AND SCIENCE COLLEGE CALICUT
               </p>
             </div>
 
